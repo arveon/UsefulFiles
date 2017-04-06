@@ -65,7 +65,7 @@ void shortest_path(SimplePoint* start)
 void backtrack(SimplePoint* endpoint, SimplePoint* startpoint)
 {
 	SimplePoint* cur_point = endpoint;
-	path.push_back(endpoint);
+	//path.push_back(endpoint);
 	bool start_reached = false;
 	while (!start_reached)
 	{
@@ -80,9 +80,11 @@ void backtrack(SimplePoint* endpoint, SimplePoint* startpoint)
 		}
 
 		SimplePoint* temp = new SimplePoint{min_point->x, min_point->y, 3};
-		path.push_back(temp);
+		
 		if (min_point->val == -10)
 			start_reached = true;
+		else
+			path.push_back(temp);
 
 		cur_point = min_point;
 	}
@@ -179,6 +181,9 @@ int main(int argc, char* argv[])
 		field[path.at(i)->x][path.at(i)->y].val = 3;
 	}
 
+	start->val = -10;
+	end->val = -11;
+
 	//display calculations
 	cout << "calculations: " << endl;
 	for (int i = 0; i < FIELD_SIZE; i++)
@@ -194,7 +199,16 @@ int main(int argc, char* argv[])
 	for (int i = 0; i < FIELD_SIZE; i++)
 	{
 		for (int j = 0; j < FIELD_SIZE; j++)
-			cout << field[i][j].val << " ";
+			if (field[i][j].val == -1)
+				cout << "w ";
+			else if (temp[i][j].val == -10)
+				cout << "s ";
+			else if (temp[i][j].val == -11)
+				cout << "e ";
+			else if (field[i][j].val == 0)
+				cout << "_ ";
+			else
+				cout << "p ";
 		cout << endl;
 	}
 #pragma endregion
